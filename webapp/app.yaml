@@ -1,0 +1,7 @@
+runtime: python
+
+entrypoint: gunicorn -b :$PORT app:app
+
+env_variables:
+  NERF_BACKEND_URL: "https://YOUR-NERF-SERVICE-URL"
+
