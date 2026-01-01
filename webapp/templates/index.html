@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>NeRF Viewer</title>
+    <style>
+      body { font-family: sans-serif; margin: 2rem; max-width: 900px; }
+      .row { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+      label { display: inline-block; min-width: 120px; }
+      input { padding: 0.4rem; width: 140px; }
+      button { padding: 0.5rem 1rem; }
+      .err { color: #b00020; margin-top: 1rem; }
+      img { margin-top: 1rem; max-width: 100%; border: 1px solid #ddd; }
+      .hint { color: #555; font-size: 0.9rem; }
+    </style>
+  </head>
+  <body>
+    <h1>NeRF Viewer</h1>
+
+    <form method="POST" action="/render">
+      <div class="row">
+        <div>
+          <label for="azimuth_deg">Azimuth (deg)</label>
+          <input id="azimuth_deg" name="azimuth_deg" value="{{ azimuth_deg }}" required />
+        </div>
+        <div>
+          <label for="polar_deg">Polar (deg)</label>
+          <input id="polar_deg" name="polar_deg" value="{{ polar_deg }}" required />
+        </div>
+        <div>
+          <label for="elevation_deg">Elevation (deg)</label>
+          <input id="elevation_deg" name="elevation_deg" value="{{ elevation_deg }}" required />
+        </div>
+        <div>
+          <button type="submit">Render</button>
+        </div>
+      </div>
+      <p class="hint">Angles are in degrees and should match your angles.csv convention.</p>
+    </form>
+
+    {% if error %}
+      <div class="err">{{ error }}</div>
+    {% endif %}
+
+    {% if image_url %}
+      <h2>Rendered Image</h2>
+      <img src="{{ image_url }}" alt="NeRF Render" />
+      <p class="hint">Submit new angles above to render another view.</p>
+    {% endif %}
+  </body>
+</html>
+
